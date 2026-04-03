@@ -726,7 +726,7 @@ function runBunBuild() {
     encoding: 'utf8',
     env: {
       ...process.env,
-      USER_TYPE: 'ant',
+      USER_TYPE: 'external',  // [MOD] Use external to avoid ant-only server signals (cli-internal beta, anthropic_internal params)
       CLAUDE_CODE_VERIFY_PLAN: 'false',
     },
     maxBuffer: 256 * 1024 * 1024,
@@ -741,7 +741,7 @@ function finalizeBuild() {
   const wrapperSource =
     `${createBanner(packageJson.version)}` +
     `// ── [MOD] Runtime environment overrides ──\n` +
-    `process.env.USER_TYPE = 'ant';\n` +
+    `process.env.USER_TYPE = 'external';  // [MOD] external = no ant-only server signals\n` +
     `process.env.NODE_ENV = 'development';\n` +
     `process.env.CLAUDE_CODE_ENABLE_TELEMETRY = '';\n` +
     `process.env.CLAUDE_CODE_DATADOG_FLUSH_INTERVAL_MS = '999999999';\n` +
